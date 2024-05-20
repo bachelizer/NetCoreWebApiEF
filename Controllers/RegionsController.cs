@@ -19,22 +19,11 @@ public class RegionsController : ControllerBase
 
     // GET: https:localhost:port/api/regions
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        /*  var regions = new List<Region>
-         {
-             new Region { Id = Guid.NewGuid(),
-             Name = "Auckland Region",
-             Code = "AKL",
-             RegionImageUrl = ""},
-              new Region { Id = Guid.NewGuid(),
-             Name = "Wellington Region",
-             Code = "WLG",
-             RegionImageUrl = ""}
-         }; */
 
         // Get Data from database - domain model
-        var regions = _dbContext.Regions.ToList();
+        var regions = await _dbContext.Regions.ToListAsync();
 
         // Map Domain Models to DTOs
         var regionsDto = new List<RegionDto>();
@@ -58,12 +47,12 @@ public class RegionsController : ControllerBase
     // GET: https://localhost:port/api/regions/{id}
     [HttpGet]
     [Route("{id:Guid}")]
-    public IActionResult GetById([FromRoute] Guid id)
+    public async Task<IActionResult> GetById([FromRoute] Guid id)
     {
         // var region = _dbContext.Regions.Find(id); // EF method
 
         // Get Region Doamin Model from Database
-        var region = _dbContext.Regions.FirstOrDefault(x => x.Id == id); // LinQ method.
+        var region = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id); // LinQ method.
         if (region == null) return NotFound();
 
         // Map Region Domain Model to RegionDTO
@@ -84,7 +73,7 @@ public class RegionsController : ControllerBase
 
     // POST: https://localhost:port/api/regions
     [HttpPost]
-    public IActionResult Create([FromBody] AddRegionRequestDto addRegionRequestDto)
+    public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
     {
         // Map or Convert DTO to Domain Model
         var regionDomainModel = new Region
@@ -95,9 +84,10 @@ public class RegionsController : ControllerBase
         };
 
         // Use Domain Model to create Region
-        _dbContext.Regions.Add(regionDomainModel);
+       await  _dbContext.Regions.AddAsync(regionDomainModel);
+
         // Save the data to database
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
 
         // Map Domain model back to DTO
         var regionDto = new RegionDto
@@ -114,10 +104,10 @@ public class RegionsController : ControllerBase
     // PUT: https://localhost:port/api/regions/{id}
     [HttpPut]
     [Route("{id:Guid}")]
-    public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
     {
         // Check if the region exists
-        var regionDomainModel = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+        var regionDomainModel = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
         if(regionDomainModel == null) return NotFound();
 
         // Map DTO to domain model
@@ -125,11 +115,12 @@ public class RegionsController : ControllerBase
         regionDomainModel.Name = updateRegionRequestDto.Name;
         regionDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
 
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
 
         // Convert Domain model to DTO
         var regionDto = new RegionDto{
             Id = regionDomainModel.Id,
+            Code = regionDomainModel.Code,
             Name = regionDomainModel.Name,
             RegionImageUrl = regionDomainModel.RegionImageUrl
         };
@@ -140,26 +131,15 @@ public class RegionsController : ControllerBase
     // DELETE: https://localhost:port/api/regions/{id}
     [HttpDelete]
     [Route("{id:Guid}")]
-    public IActionResult Delete([FromRoute]Guid id)
+    public async Task<IActionResult> Delete([FromRoute]Guid id)
     {
-        var regionDomainModel = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+        var regionDomainModel = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
         if (regionDomainModel == null) return NotFound();
 
         // Delete region
         _dbContext.Regions.Remove(regionDomainModel);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
 
         return Ok();
-
-        // Optional for delete
-       /*  var regionDto = new RegionDto
-        {
-            Id = regionDomainModel.Id,
-            Code = regionDomainModel.Code,
-            Name = regionDomainModel.Name,
-            RegionImageUrl = regionDomainModel.RegionImageUrl
-        };
-
-        return Ok(regionDto); */
     }
 }
