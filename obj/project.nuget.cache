@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "0hQN/6+FhpP4RHt5X7XPwPyLbVcu4dnMVoF0/QpCKxdaAkm+7g4Iq1vgkpMf2nWd3TnCrLQYvJRFiY5k0fYkAw==",
+  "dgSpecHash": "o/Lka46zX9/yS7trz+Ksv6bxcPFjb3oTcm7xpJuOBuwK6jKRp0Ekhwo26cmt3UPLoEF6Ro3W0kHs5KYnCYwzzg==",
   "success": true,
   "projectFilePath": "D:\\PERSONAL FILES\\LEARNING PROJECTS\\UDEMY\\NET CORE\\NZWalks.Api\\NZWalks.Api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\MIS-BACH\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\MIS-BACH\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\MIS-BACH\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\MIS-BACH\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
