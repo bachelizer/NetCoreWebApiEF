@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NZWalks.Api.Data;
 
@@ -11,9 +12,11 @@ using NZWalks.Api.Data;
 namespace NZWalks.Api.Migrations
 {
     [DbContext(typeof(NZWalksDbContext))]
-    partial class NZWalksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522133736_Seeding_Difficulties_and_Regions")]
+    partial class SeedingDifficultiesandRegions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,22 +77,6 @@ namespace NZWalks.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7c9e6679-7325-40de-944b-e07fc1f90ae7"),
-                            Code = "AKL",
-                            Name = "Auckland",
-                            RegionImageUrl = "AKL.png"
-                        },
-                        new
-                        {
-                            Id = new Guid("7c9e6679-7425-40df-944b-e07fc1f90ae7"),
-                            Code = "STL",
-                            Name = "SouthLand",
-                            RegionImageUrl = "STL.png"
-                        });
                 });
 
             modelBuilder.Entity("NZWalks.Api.Models.Domain.Walk", b =>

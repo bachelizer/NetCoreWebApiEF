@@ -1,0 +1,7 @@
+dotnet ef database update -- --environment Production
+
+// add migration
+dotnet ef migrations add InitialCreate
+
+// update the database base from migration
+dotnet ef database update
